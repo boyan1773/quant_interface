@@ -1,0 +1,78 @@
+<style>
+    .content{
+        width: auto;
+        height: auto;
+        margin: 30px;
+    }
+    .summary_title{
+        display: flex;
+        flex-direction: row;
+        font-size: 30px;
+        color: slategray;
+        margin: 10px 10px 0 10px;
+    }
+    .smalltitle{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        height: 45px;
+        padding-bottom: 6px;
+        margin-left: 10px;
+        font-size: 15px;
+    }
+    .decorateline{
+        width: 500px;
+        height: 2px;
+        margin: 0 10px;
+        background-color: goldenrod;
+    }
+    .news_content{
+        display: flex;
+        flex-direction: row;
+        width: auto;
+        height: 200px ;
+        margin: 10px;
+    }
+</style>
+{% extends 'news/news_base.html' %}
+{% block second_header %}
+<ul class="nav nav-underline"  style="padding: 0 8px; width: 100%; text-align: center ;background-color: white;">
+    <li class="nav-item" style="width: 75px; margin-left: 30px;">
+        <a class="nav-link active" style="color: slategray;" aria-current="page" href="/news">Summary</a>
+    </li>
+    <li class="nav-item" style="width: 30px">
+        <a class="nav-link" style="color: slategray;" href="/news/bbc">bbc</a>
+    </li>
+    <li class="nav-item" style="width: 30px;">
+        <a class="nav-link" style="color: slategray;" href="/news/cnn">cnn</a>
+    </li>
+    <li class="nav-item" style="width: 49px;">
+        <a class="nav-link" style="color: slategray;" href="/news/yahoo">yahoo</a>
+    </li>
+</ul>
+{% endblock %}
+{% block content %}
+<div class="content">
+    <div class="summary_title">BBC
+        <div class="smalltitle">Summary</div>
+    </div>
+    <div class="decorateline"></div>
+    <div class="news_content">
+
+    </div>
+    <div class="summary_title">CNN
+        <div class="smalltitle">Summary</div>
+    </div>
+    <div class="decorateline"></div>
+    <div class="news_content">
+
+    </div>
+    <div class="summary_title">Yahoo
+        <div class="smalltitle">Summary</div>
+    </div>
+    <div class="decorateline"></div>
+    <div class="news_content">
+
+    </div>
+</div>
+{% endblock %}
