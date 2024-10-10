@@ -39,7 +39,11 @@ def day_data(stocknumber,peroid=6):
         data = pd.DataFrame(data,columns=columns)
     except:
         return None,stocknumber
+<<<<<<< HEAD
     data = data.apply(lambda x: x.replace(',', ''))
+=======
+    data = data.map(lambda x: x.replace(',', ''))
+>>>>>>> 7ae95e4c65da82c73c62e44da7f7287e67fcec24
     return  title,data
 
 def market_data(period=6):
@@ -56,7 +60,11 @@ def market_data(period=6):
             continue
     df = pd.DataFrame(data,columns=columns)
     df.rename(columns={"發行量加權股價指數":"收盤價"}, inplace=True)
+<<<<<<< HEAD
     df = df.apply(lambda x: x.replace(',', ''))
+=======
+    df = df.map(lambda x: x.replace(',', ''))
+>>>>>>> 7ae95e4c65da82c73c62e44da7f7287e67fcec24
     return df
 
 def pe_data(stocknumber):
