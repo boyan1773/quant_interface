@@ -1,0 +1,44 @@
+{% extends 'news/news_base.html' %}
+{% block second_header %}
+<ul class="nav nav-underline"  style="padding: 0 8px; width: 100%; text-align: center ;background-color: white;">
+    <li class="nav-item" style="width: 75px; margin-left: 30px;">
+        <a class="nav-link" style="color: slategray;" href="/news">Summary</a>
+    </li>
+    <li class="nav-item" style="width: 30px; text-align: center;">
+        <a class="nav-link active" style="color: slategray;" aria-current="page" href="/news/bbc">bbc</a>
+    </li>
+    <li class="nav-item" style="width: 30px; text-align: center;">
+        <a class="newsnav nav-link" style="color: slategray;" href="/news/cnn">cnn</a>
+    </li>
+    <li class="nav-item" style="width: 49px; text-align: center;">
+        <a class="newsnav nav-link" style="color: slategray;" href="/news/yahoo">yahoo</a>
+    </li>
+</ul>
+{% endblock %}
+{% block content %}
+<table style="margin:15px auto">
+    {% for outer_key, inner_dict in data.items %}
+    {% if forloop.counter0|divisibleby:3 %}
+    </tr>
+    <tr>
+        <td class="td_by3">
+            <div style="padding: 10px;">
+                <a href= "{{ inner_dict.url }}" style="text-decoration: none; color: slategray;" >
+                    <div style="font-size: 20px;"><b>{{inner_dict.title}}</b></div>
+                    <div>{{inner_dict.summary}}</div>
+                </a>
+            </div>
+        </td> 
+    {% else %}
+        <td class="td_by3">
+            <div style="padding: 10px;">
+                <a href= "{{ inner_dict.url }}" style="text-decoration: none; color: slategray;" >
+                    <div style="font-size: 20px;"><b>{{inner_dict.title}}</b></div>
+                    <div>{{inner_dict.summary}}</div>
+                </a>
+            </div>
+        </td> 
+    {% endif %}
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,397 @@
+<style>
+    .flex_container{
+        display: flex;
+        flex-direction: row;
+        color: slategray;
+    }
+    .decoration{
+        width: 2px;
+        height: 624px;
+        margin: auto 0;
+        background-color: goldenrod;
+    }
+    /* left */
+    .left_frame{
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+        width: auto;
+        height: auto;
+        margin: 10px;
+    }
+    .left_item_top{   
+        display: flex;
+        flex-direction: row;
+        height: 70px;
+        width: 100%;
+        padding: 0 20px;
+    }
+    .left_item_mid{
+        height: auto;
+        width: auto;
+        margin: 10px 10px;
+    }
+    .name{
+        display: flex;
+        flex-direction: column;
+        padding: 5px;
+        font-size: 25px;
+        text-align: left;
+    }
+    .name_decoration{
+        width: 5px;
+        height: 30px;
+        margin: 9px;
+        background-color: goldenrod;
+    }
+    .left_decoration{
+        width: 400px;
+        height: 2px;
+        margin: 10px 0;
+        background-color: goldenrod;
+    }
+    .name_right{
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        width: 300px;
+        height: 70px;
+    }
+    .label{
+        display: flex;
+        align-items: center;
+        margin: 5px;
+        box-shadow: 5px 5px 15px rgb(210,210,210);
+        border-radius: 10px;
+    }
+    .circle_label{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        width: 180px;
+        height: 180px;
+        margin: 20px 20px 0px 30px;
+        border: 5px solid steelblue;
+        border-radius: 50%;
+        border-bottom: 5px solid transparent;
+    }
+    .circle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        width: 160px;
+        height: 160px;
+        margin: 20px 20px 0px 30px;
+        border: 5px solid steelblue;
+        border-radius: 50%;
+        border-bottom: 5px solid transparent;
+  }
+
+    .overlay {
+        fill: none;
+        pointer-events: all; 
+        color: steelblue;
+        font-size: 25px;
+    }
+    /* right */
+    .right_frame{
+        width: auto;
+        height: auto;
+        margin: 10px;
+    }
+    
+</style>
+{% extends 'base.html' %}
+{% block title %} {{title}} {% endblock %}
+{% block content %}
+<div class="flex_container">
+    <div class="left_frame">
+        <div class="left_item_top">
+            <div class="name_decoration"></div>
+                <div class="name">{{title}}
+                    <div style="font-size: 15px;">{% block left_top %}{% endblock %} {{stocknumber}}</div>
+                </div>
+                <div style="flex: 1;"></div>
+                <div class="name_right">
+                    <div style="font-size: 20px; padding: 5px 10px;" id="change">{{change}}</div>
+                    <div style="font-size: 35px; padding: 5px 10px;">{{close}}</div>
+                </div>
+        </div>
+        <div class="left_decoration"></div>
+        <div class="left_item_mid">
+            <div style="display: flex; flex-direction: row-reverse; font-size: 15px;">
+                <div class="label"> <div style="margin: 0 7px;">MA20 </div> <div style="margin: 0 5px; width: 15px; height: 1.5px; background-color: red;"></div></div>
+                <div class="label"> <div style="margin: 0 7px;">MA5 </div> <div style="margin: 0 5px; width: 15px; height: 1.5px; background-color: green;"></div></div>
+                <div class="label"> <div style="margin: 0 7px;">EMA9 </div> <div style="margin: 0 5px; width: 15px; height: 1.5px; background-color: goldenrod;"></div></div>
+                <div class="label"> <div style="margin: 0 7px;">Price</div> <div style="margin: 0 5px; width: 15px; height: 1.5px; background-color: steelblue;"></div></div>
+            </div>
+            <svg id = "chart" style="width: auto; height:auto;"></svg>
+            <div style="display: flex; flex-direction: row; justify-content: center; font-size: 25px;">
+                <div class="circle">%k<br>{{k_line}}</div>
+                <div class="circle">%d<br>{{d_line}}</div>
+                <div class="circle">RSI<br>{{rsi}}</div>
+                <div class="circle">Bias<br>{{bias}}</div>
+                <div class="circle">MV5 ratio<br>{{volume_ratio}}%</div>
+            </div>
+            <div style="display: flex; flex-direction: row; justify-content: center; padding: 10px; font-size: 25px;">
+                <div style="flex: 1;"></div>
+                <div class="label">
+                    <div><b>&ensp;AH</b>&ensp;{{r2}}&ensp;</div>
+                </div>
+                <div style="flex: 1;"></div>
+                <div class="label">
+                    <div><b>&ensp;NH</b>&ensp;{{r1}}&ensp;</div>
+                </div>
+                <div style="flex: 1;"></div>
+                <div class="label">
+                    <div><b>&ensp;CDP</b>&ensp;{{cdp}}&ensp;</div>
+                </div>
+                <div style="flex: 1;"></div>
+                <div class="label">
+                    <div><b>&ensp;NL</b>&ensp;{{s1}}&ensp;</div>
+                </div>
+                <div style="flex: 1;"></div>
+                <div class="label">
+                    <div><b>&ensp;AL</b>&ensp;{{s2}}&ensp;</div>
+                </div>
+                <div style="flex: 1;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="decoration"></div>
+    <div style="flex: 1;"></div>
+    <div class="right_frame">
+        {% block right_frame %} {% endblock %}
+    </div>
+    <div style="flex: 1;"></div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script>
+    var data = JSON.parse('{{ chart|safe }}');
+
+    const margin = { top:10, right: 55, bottom: 30, left: 55 };
+    const width = 1100 - margin.left - margin.right;
+    const height = 500 - margin.top - margin.bottom;
+
+    const svg = d3.select("#chart")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    function convertToADYear(year) {
+        var adYear = parseInt(year) + 1911;
+        return adYear.toString();
+    }
+
+    const parseDate = d3.timeParse("%Y/%m/%d");
+    
+    data.data.map(function(d) {
+        d[0] = parseDate(d[0]);
+        d[1] = parseFloat(d[1]);
+        d[2] = parseFloat(d[2])/1000;
+        d[3] = parseFloat(d[3]);
+        d[4] = parseFloat(d[4]);
+        d[5] = parseFloat(d[5]);
+        d[6] = parseFloat(d[6]);
+        d[7] = parseFloat(d[7]);
+        d[8] = parseFloat(d[8]);
+    });
+
+    const x = d3.scaleBand()
+        .domain(d3.map(data.data, function(d) { return d[0] ; }))
+        .range([0, width])
+        .padding(1)
+
+    const y1 = d3.scaleLinear()
+        .domain([(d3.min(data.data, function(d) { return d[1]; }))*0.95, (d3.max(data.data, function(d) { return d[1]; }))*1.05])
+        .range([height, 0]);
+
+    const y2 = d3.scaleLinear()
+        .domain([0, (d3.max(data.data, function(d) { return d[2]; }))*1.5])
+        .range([height, 0]);
+
+    const line = d3.line()
+        .x(function(d) { return x(d[0]); })
+        .y(function(d) { return y1(d[1]); });
+
+    const line_ema = d3.line()
+        .x(function(d) { return x(d[0]); })
+        .y(function(d) { return y1(d[6]); });
+
+    const line_ma5 = d3.line()
+        .x(function(d) { return x(d[0]); })
+        .y(function(d) { return y1(d[7]); });
+
+    const line_ma20 = d3.line()
+        .x(function(d) { return x(d[0]); })
+        .y(function(d) { return y1(d[8]); });
+
+    const barWidth = 7;
+    const barGroup = svg.append("g")
+
+    barGroup.selectAll("rect")
+        .data(data.data)
+        .enter().append("rect")
+        .attr("x", function(d) { return x(d[0]) - barWidth / 2; })
+        .attr("y", function(d) { return y2(d[2]); })
+        .attr("width", barWidth)
+        .attr("height", function(d) { return height - y2(d[2]); })
+        .attr("fill", "slategray")
+        .style("opacity",0.3)
+
+    svg.append("path")
+        .data([data.data])
+        .attr("fill","none")
+        .attr("stroke", "goldenrod")
+        .attr("stroke-width", 1.5)
+        .attr("d", line_ema);
+
+    svg.append("path")
+        .data([data.data])
+        .attr("fill","none")
+        .attr("stroke", "steelblue")
+        .attr("stroke-width", 1.5)
+        .attr("d", line);
+
+    svg.append("path")
+        .data([data.data])
+        .attr("fill","none")
+        .attr("stroke", "red")
+        .attr("stroke-dasharray", "10,15")
+        .attr("d", line_ma20);
+
+    svg.append("path")
+        .data([data.data])
+        .attr("fill","none")
+        .attr("stroke", "green")
+        .attr("stroke-dasharray", "10,15")
+        .attr("d", line_ma5);
+
+    var focus = svg.append("g")
+        .style("display", "none");
+
+    focus.append("line")
+        .attr("x1",0)
+        .attr("y1",-height)
+        .attr("x2",0)
+        .attr("y2",height)
+        .attr("stroke", "slategray")
+        .attr("stroke-dasharray", "5,5")
+        .attr("stroke-width", 1);
+
+    focus.append("line")
+        .attr("x1",-width)
+        .attr("y1",0)
+        .attr("x2",width)
+        .attr("y2",0)
+        .attr("stroke", "slategray")
+        .attr("stroke-dasharray", "5,5")
+        .attr("stroke-width", 1);
+
+    var tooltip = svg.append("g")
+        .style("display", "none");
+
+    var filter = svg.append("defs")
+        .append("filter")
+        .attr("id", "drop-shadow")
+        .attr("width", "200%")
+        .attr("height", "200%")
+        .attr("x", "-25%")
+        .attr("y", "-25%");
+
+    filter.append("feDropShadow")
+        .attr("dx", 0)
+        .attr("dy", 0)
+        .attr("stdDeviation", 4)
+        .attr("flood-opacity", 0.7)
+        .attr("flood-color", "gray"); 
+    
+    tooltip.append("rect")
+        .attr("x", 10)
+        .attr("y", 0)
+        .attr("width", 130)
+        .attr("height", 130)
+        .attr("rx",10)
+        .attr("ry",10)
+        .style("fill", "white")
+        .style("opacity", 0.7)
+        .style("filter", "url(#drop-shadow)");
+
+    var tooltipText = [
+        { label: "Date :", yOffset: 20 },
+        { label: "Price :", yOffset: 40 },
+        { label: "Volume :", yOffset: 60 },
+        { label: "Open :", yOffset: 80 },
+        { label: "Highest :", yOffset: 100 },
+        { label: "Lowest :", yOffset: 120 }
+    ];
+
+    tooltip.selectAll("text")
+        .data(tooltipText)
+        .enter().append("text")
+        .attr("x", 20)
+        .attr("y", function(d) { return d.yOffset; })
+        .style("text-anchor", "start")
+        .style("fill", "slategray")
+        .style("font-size", "12px")
+        .text(function(d) { return d.label; });
+
+    svg.append("rect")
+        .attr("class", "overlay")
+        .attr("width", width)
+        .attr("height", height)
+        .on("mouseover", function() { focus.style("display", null);  tooltip.style("display", null);})
+        .on("mouseout", function() { focus.style("display", "none"); tooltip.style("display", "none"); })
+        .on("mousemove", mousemove);
+
+    
+    svg.append("g")
+        .style("fill","white")
+        .attr("transform", "translate(0," + height + ")")
+        .style("font-size","12px")
+        .call(
+            d3.axisBottom(x)
+            .tickValues(x.domain().filter(function(d,i){return i%5===0;}))
+            .tickFormat(function(d) { return d3.timeFormat("%b%d")(d); })
+        );
+
+    svg.append("g")
+        .style("fill","white")
+        .style("font-size","12px")
+        .call(d3.axisLeft(y1));
+
+    svg.append("g")
+        .style("fill","white")
+        .style("font-size","12px")
+        .attr("transform", "translate(" + width + " ,0)")
+        .call(d3.axisRight(y2));
+
+    function mousemove(event) {
+        var mouseX = d3.pointer(event)[0];
+        var x0 = x.domain()[Math.round(mouseX / (width / (x.domain().length - 1)))];
+        var bisectDate = d3.bisector(function(d) { return d[0]; }).left;
+        var i = bisectDate(data.data, x0, 1);
+        var d0 = data.data[i - 1];
+        var d1 = data.data[i];
+        var d = x0 - d0[0] > d1[0] - x0 ? d1 : d0;
+        focus.attr("transform", "translate(" + x(d[0]) + "," + y1(d[1]) + ")");
+        tooltip.style("display", null); 
+        tooltip.selectAll("text")
+        .data([
+            "Date : " + d[0].toLocaleDateString(),
+            "Price : " + d[1].toFixed(2),
+            "Volume : " + d[2].toFixed(2),
+            "Open : " + d[3].toFixed(2),
+            "Highest : " + d[4].toFixed(2),
+            "Lowest : " + d[5].toFixed(2)
+        ])
+        .text(function(d) { return d; });
+    }
+</script>
+{% endblock %}
