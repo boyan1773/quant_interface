@@ -50,12 +50,16 @@ def search(request):
 
     day = data[["日期"]]
     change = (data.iloc[-1])["漲跌價差"]
-    close = (data.iloc[-1])["收盤價"]
-    open = (data.iloc[-1])["開盤價"]
-    high = (data.iloc[-1])["最高價"]
-    lowset = (data.iloc[-1])["最低價"]
+    close = float((data.iloc[-1])["收盤價"].replace(',', ''))
+    open = float((data.iloc[-1])["開盤價"].replace(',', ''))
+    high = float((data.iloc[-1])["最高價"].replace(',', ''))
+    lowset = float((data.iloc[-1])["最低價"].replace(',', ''))
+    print(close)
 
-    chart = data[["日期","收盤價","成交股數","開盤價","最高價","最低價","ema","ma5","ma20"]][19:]
+    cols_to_convert = ["收盤價", "成交股數", "開盤價", "最高價", "最低價", "ema", "ma5", "ma20"]
+    data[cols_to_convert] = data[cols_to_convert].replace(',', '', regex=True).astype(float)
+    chart = data[["日期"] + cols_to_convert][19:]    
+    
     context = {
         'stocknumber':stocknumber,
         'title':title,
@@ -79,7 +83,6 @@ def search(request):
         's1':round(s1.iloc[-1],2),
         's2':round(s2.iloc[-1],2),
         }
-
     try:
         pe= pe_data(stocknumber)
         context['yiel'] = (pe.iloc[-1])["殖利率(%)"]
