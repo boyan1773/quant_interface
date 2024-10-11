@@ -38,7 +38,7 @@ def day_data(stocknumber,peroid=5):
     try:
         data = pd.DataFrame(data,columns=columns)
     except:
-        return None,stocknumber
+        return None
     data = data.apply(lambda x: x.replace(',', ''))
     return  title,data
 
