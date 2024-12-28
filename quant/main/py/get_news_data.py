@@ -5,7 +5,7 @@ from ..models import cnn_news_model,bbc_news_model,yahoo_news_model
 
 def get_bbc_news():
     bbc_news_model.objects.all().delete()
-    data = requests.get("https://push.api.bbci.co.uk/batch?t=%2Fdata%2Fbbc-morph-%7Blx-commentary-data-paged%2Fabout%2F19a1d11b-1755-4f97-8747-0c9534336a47%2FisUk%2Ffalse%2Flimit%2F20%2FnitroKey%2Flx-nitro%2FpageNumber%2F0%2Fversion%2F1.5.6%2Clx-commentary-data-paged%2Fabout%2F19a1d11b-1755-4f97-8747-0c9534336a47%2FisUk%2Ffalse%2Flimit%2F20%2FnitroKey%2Flx-nitro%2FpageNumber%2F1%2Fversion%2F1.5.6%2Clx-commentary-data-paged%2Fabout%2F19a1d11b-1755-4f97-8747-0c9534336a47%2FisUk%2Ffalse%2Flimit%2F20%2FnitroKey%2Flx-nitro%2FpageNumber%2F50%2Fversion%2F1.5.6%7D?timeout=5").json()
+    data = requests.get("https://push.api.bbci.co.uk/batch?t=%2Fdata%2Fbbc-morph-%7Blx-commentary-data-paged%2Fabout%2F19a1d11b-1755-4f97-8747-0c9534336a47%2FisUk%2Ffalse%2Flimit%2F20%2FnitroKey%2Flx-nitro%2FpageNumber%2F0%2Fversion%2F1.5.6%2Clx-commentary-data-paged%2Fabout%2F19a1d11b-1755-4f97-8747-0c9534336a47%2FisUk%2Ffalse%2Flimit%2F20%2FnitroKey%2Flx-nitro%2FpageNumber%2F1%2Fversion%2F1.5.6%2Clx-commentary-data-paged%2Fabout%2F19a1d11b-1755-4f97-8747-0c9534336a47%2FisUk%2Ffalse%2Flimit%2F20%2FnitroKey%2Flx-nitro%2FpageNumber%2F50%2Fversion%2F1.5.6%7D?timeout=5").json()#網址失效
     data = data['payload'][1]['body']['results']
     for i in range(len(data)):
         new_news = bbc_news_model(title = data[i]['title'] , summary = data[i]['summary'] , url = "https://www.bbc.com"+data[i]['url'] , content = "None")
@@ -25,7 +25,7 @@ def get_cnn_news():
 
 def get_yahoo_news():
     yahoo_news_model.objects.all().delete()
-    response = requests.get("https://tw.stock.yahoo.com/intl-markets").text
+    response = requests.get("https://tw.stock.yahoo.com/intl-markets").text #網址失效
     soup = bs(response,'html.parser')
     data = soup.find_all(class_='Ov(h) Pend(14%) Pend(44px)--sm1024')
     for i in range(len(data)):
