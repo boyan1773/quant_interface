@@ -25,7 +25,7 @@ def get_cnn_news():
 
 def get_yahoo_news():
     yahoo_news_model.objects.all().delete()
-    response = requests.get("https://tw.stock.yahoo.com/intl-markets").text #網址失效
+    response = requests.get("https://tw.stock.yahoo.com/news").text #網址失效
     soup = bs(response,'html.parser')
     data = soup.find_all(class_='Ov(h) Pend(14%) Pend(44px)--sm1024')
     for i in range(len(data)):
